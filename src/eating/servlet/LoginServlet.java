@@ -78,7 +78,7 @@ public class LoginServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 			
-		out.println("failed");
+		out.println("success");
 			
 		out.flush();
 		out.close();

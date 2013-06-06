@@ -27,9 +27,12 @@ import com.example.smartseller.R;
 
 import eating.defined.User;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,17 +47,18 @@ public class MainActivity extends Activity {
 	private String responseMsg="";
 	private static final int REQUEST_TIMEOUT = 5*1000;
 	private static final int SO_TIMEOUT = 10*1000;
-	private SharedPreferences sp;
 	private EditText userNameText;
 	private EditText passwordText;
+	private Toast toast;
 	
+	private Handler handler;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		btnLogin = (Button) findViewById(R.id.logBT);
-		userNameText = (EditText)findViewById(R.id.cardNumAuto);
-		passwordText = (EditText)findViewById(R.id.passwordET);
+		userNameText = (EditText)findViewById(R.id.userName);
+		passwordText = (EditText)findViewById(R.id.password);
 		btnLogin.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
@@ -64,6 +68,26 @@ public class MainActivity extends Activity {
 				
 			}
 		});
+		handler = new Handler(){
+			public void handleMessage(Message msg){
+				System.out.println("the message what is" + msg.what);
+				switch(msg.what){
+				case 0:
+					toast = Toast.makeText(getApplicationContext(),"登陆成功", Toast.LENGTH_LONG);
+				    toast.setGravity(Gravity.CENTER, 0, 0);
+				    toast.show();
+				    Intent intent = new Intent(MainActivity.this, MainpageActivity.class);
+				    startActivity(intent);
+				    finish();
+					break;
+				case 1:
+					toast = Toast.makeText(getApplicationContext(),"用户名密码错误，", Toast.LENGTH_LONG);
+				    toast.setGravity(Gravity.CENTER, 0, 0);
+				    toast.show();
+				    break;
+				}
+			}
+		};
 	}
 
 	@Override
@@ -81,19 +105,25 @@ public class MainActivity extends Activity {
 			String userName = userNameText.getText().toString();
 			String password = passwordText.getText().toString();
 			boolean loginValidate = loginServer(userName, password);
+			System.out.println("loginserver gets the result:"+loginValidate);
 			if(loginValidate){
-				 System.out.println("yes success");
+				Message msg = new Message();
+                msg.what = 0;
+                handler.sendMessage(msg);
 			}
 			else{
-				System.out.println("no failure");
+				Message msg = new Message();
+                msg.what = 1;
+                handler.sendMessage(msg);
 			}
 				 
 			
 		}
 		
 	}
+	
+	
 	private boolean loginServer(String userName,String password){
-		boolean loginValidate = false;
 		String urlStr = "http://192.168.1.2:8088/Android_Servlet/servlet/LoginServlet";
 		HttpPost request = new HttpPost(urlStr);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -105,15 +135,21 @@ public class MainActivity extends Activity {
 			HttpResponse response = client.execute(request);
 			 if(response.getStatusLine().getStatusCode()==200)
 	            {
-	                loginValidate = true;
 	                //获得响应信息
-	                responseMsg = EntityUtils.toString(response.getEntity());
-	                System.out.println(responseMsg);
+	                responseMsg = (EntityUtils.toString(response.getEntity())).trim();
+	                System.out.println(responseMsg.trim().length());
+	                if(responseMsg.equals("success"))
+	                	 return true;
+	       
+	                else
+	                	return false;
 	            }
+			 else
+				 return false;
 		}catch(Exception e){
 			e.printStackTrace();
+			return false;
 		}	
-		return loginValidate;
 	}
 	public HttpClient getHttpClient(){
 		BasicHttpParams httpParams = new BasicHttpParams();
