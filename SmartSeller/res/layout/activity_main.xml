@@ -12,33 +12,66 @@
 		<TextView android:id="@+id/tv_account" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_marginRight="10dp"
 			android:text="用  户  名:" android:textSize="15px" />
-		<AutoCompleteTextView android:id="@+id/cardNumAuto"
+		<EditText android:id="@+id/cardNumAuto"
 			android:layout_width="fill_parent" android:layout_height="40px">
-		</AutoCompleteTextView>
-	</LinearLayout>
-
-
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="40px" android:orientation="horizontal">
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:layout_marginRight="10dp"
-			android:text="用户密码:" android:textSize="15px" />
-		<EditText android:id="@+id/passwordET" android:layout_width="fill_parent"
-			android:layout_height="40px">
 		</EditText>
 	</LinearLayout>
 
-	<LinearLayout android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:orientation="horizontal">
-		<CheckBox android:id="@+id/savePasswordCB"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_marginLeft="20dp" android:text="记住密码">
-		</CheckBox>
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="40px"
+	    android:orientation="horizontal" >
 
-		<Button android:id="@+id/logBT" android:layout_width="100px"
-			android:layout_height="wrap_content" android:layout_marginLeft="40dp"
-			android:layout_marginRight="10dp" android:text="登录">
-		</Button>
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="10dp"
+	        android:text="用户密码:"
+	        android:textSize="15px" />
+
+	    <EditText
+	        android:id="@+id/passwordET"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.96" >
+	    </EditText>
 	</LinearLayout>
+
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+
+	    <CheckBox
+	        android:id="@+id/savePasswordCB"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="20dp"
+	        android:text="记住密码" />
+
+	    <Button
+	        android:id="@+id/logBT"
+	        android:layout_width="100px"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="40dp"
+	        android:layout_marginRight="10dp"
+	        android:text="登录" />
+	</LinearLayout>
+
+	<LinearLayout 
+	android:layout_width="wrap_content" 
+	android:layout_height="40px"
+	    android:orientation="horizontal">
+	</LinearLayout>
+
+	<EditText
+	    android:id="@+id/testShow"
+	    android:layout_width="259dp"
+	    android:layout_height="71dp"
+	    android:ems="10"
+	    android:text="absf" >
+
+	    <requestFocus />
+	</EditText>
 
 </LinearLayout>
