@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 	
 	
 	private boolean loginServer(String userName,String password){
-		String urlStr = "http://192.168.1.2:8088/Android_Servlet/servlet/LoginServlet";
+		String urlStr = "http://192.168.1.2:8088/ServerManagement/LoginServlet.action";
 		HttpPost request = new HttpPost(urlStr);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("userName",userName));
@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
 	            {
 	                //获得响应信息
 	                responseMsg = (EntityUtils.toString(response.getEntity())).trim();
-	                System.out.println(responseMsg.trim().length());
+	                System.out.println(responseMsg.trim().length() + "%^" + responseMsg);
 	                if(responseMsg.equals("success"))
 	                	 return true;
 	       
