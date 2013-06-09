@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -22,6 +23,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import com.example.smartseller.R;
 
@@ -45,11 +47,14 @@ public class MainActivity extends Activity {
 
 	private Button btnLogin;
 	private String responseMsg="";
+	private int storeId;
 	private static final int REQUEST_TIMEOUT = 5*1000;
 	private static final int SO_TIMEOUT = 10*1000;
 	private EditText userNameText;
 	private EditText passwordText;
 	private Toast toast;
+	private String userName;
+	private String password;
 	
 	private Handler handler;
 	
@@ -77,6 +82,8 @@ public class MainActivity extends Activity {
 				    toast.setGravity(Gravity.CENTER, 0, 0);
 				    toast.show();
 				    Intent intent = new Intent(MainActivity.this, MainpageActivity.class);
+				    intent.putExtra("userName", userName);
+				    intent.putExtra("storeId", storeId);
 				    startActivity(intent);
 				    finish();
 					break;
@@ -102,8 +109,8 @@ public class MainActivity extends Activity {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			String userName = userNameText.getText().toString();
-			String password = passwordText.getText().toString();
+			userName = userNameText.getText().toString();
+			password = passwordText.getText().toString();
 			boolean loginValidate = loginServer(userName, password);
 			System.out.println("loginserver gets the result:"+loginValidate);
 			if(loginValidate){
@@ -135,9 +142,13 @@ public class MainActivity extends Activity {
 			HttpResponse response = client.execute(request);
 			 if(response.getStatusLine().getStatusCode()==200)
 	            {
-	                //获得响应信息
-	                responseMsg = (EntityUtils.toString(response.getEntity())).trim();
-	                System.out.println(responseMsg.trim().length() + "%^" + responseMsg);
+	                //获得响应信息       
+                 String out = EntityUtils.toString(response.getEntity(), "UTF-8");    
+            	 JSONObject jsonObject = new JSONObject(out);  
+                 responseMsg = jsonObject.getString("result"); 				 
+				 storeId = jsonObject.getInt("storeId");
+	                
+	                System.out.println("result is:" + responseMsg +"&& store is:" + storeId);
 	                if(responseMsg.equals("success"))
 	                	 return true;
 	       
