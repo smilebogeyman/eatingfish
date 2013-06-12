@@ -32,6 +32,7 @@ import com.eatingfish.smartseller.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,11 +48,21 @@ public class UserAction extends Activity {
 	Button submitButton ;
 	TextView name ;
 	EditText itemId ;
+	String userName;
+	int storeId;
+	int userId;
 
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState) ;
 		setContentView(R.layout.mainpage) ;
+		Intent intent = getIntent();  
+		
+        userName = intent.getStringExtra("userName");   //获得前一个页面的userName和storeId
+        storeId = intent.getIntExtra("storeId", 0); 
+        userId = intent.getIntExtra("userId", 0);
+		
+		
 		exitButton = (Button)findViewById(R.id.exitButton) ;
 		name = (TextView)findViewById(R.id.userName) ;
 		addButton = (Button)findViewById(R.id.addButton) ;
@@ -112,7 +123,10 @@ public class UserAction extends Activity {
 			{
 				public void onClick(View v)
 				{
-					//在此打开修改个人信息页面
+					Intent intent = new Intent(UserAction.this, ChangePsdActivity.class);
+					intent.putExtra("userId", userId);
+					startActivity(intent);
+					finish();                         //修改密码吧，那我跳转啦~~~我跳-我跳-我跳跳跳~~~）
 				}
 			});
 	}
@@ -120,7 +134,7 @@ public class UserAction extends Activity {
 	private boolean getItemId() throws Exception {
 		EditText idNumText = (EditText)findViewById(R.id.idNumber) ;
 		String currItemId = idNumText.getText().toString() ;
-		//storeId需要改哦~
+		//storeId需要改哦~  ？？《storeId改什么呢？》
 		String currUrl = HttpGetThread.BASE_URL + "getItemInfo.action?itemId=" + currItemId + "&storeId=同济" ;
 	
 	    HttpGetThread test = new HttpGetThread(currUrl) ;

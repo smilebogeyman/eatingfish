@@ -6,16 +6,26 @@
     <string name="title">登陆界面</string>
     <string name="title_activity_mainpage">mainpage</string>
     <string name="toptitle1">操作员</string>
-	<string name="toptitle2">退出</string>
-	<string name="search">查找商品</string>
-	<string name="orders">历史订单</string>
-	<string name="itemId">商品id</string>
-	<string name="add">添加</string>
-	<string name="itemName">商品名称</string>
-	<string name="itemSPrice">单价</string>
-	<string name="itemNum">数量</string>
-	<string name="itemTPrice">总价</string>
-	<string name="discount">折扣</string>
-	<string name="submit">完成</string>
-	<string name="idHint">请输入商品序列号</string>
+    <string name="toptitle2">退出</string>
+    <string name="search">查找商品</string>
+    <string name="orders">历史订单</string>
+    <string name="itemId">商品id</string>
+    <string name="add">添加</string>
+    <string name="itemName">商品名称</string>
+    <string name="itemSPrice">单价</string>
+    <string name="itemNum">数量</string>
+    <string name="itemTPrice">总价</string>
+    <string name="discount">折扣</string>
+    <string name="submit">完成</string>
+    <string name="idHint">请输入商品序列号</string>
+    <string name="title_activity_change_psd">ChangePsdActivity</string>
+   
+   
+    <string name="titleOfChangepsd">修改密码</string>
+    <string name="original_psd">原密码：</string>
+    <string name="new_psd">新密码：</string>
+    <string name="re_psd">确认密码</string>
+    <string name="change">修改</string>
+    <string name="back">返回</string>
+
 </resources>
