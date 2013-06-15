@@ -19,13 +19,16 @@
     <string name="submit">完成</string>
     <string name="idHint">请输入商品序列号</string>
     <string name="title_activity_change_psd">ChangePsdActivity</string>
-   
-   
     <string name="titleOfChangepsd">修改密码</string>
     <string name="original_psd">原密码：</string>
     <string name="new_psd">新密码：</string>
     <string name="re_psd">确认密码</string>
     <string name="change">修改</string>
     <string name="back">返回</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="rBSearchById">按id查询</string>
+    <string name="rBSearchByCato">按类别查询</string>
+    <string name="searchItem">查找</string>
 
 </resources>

@@ -99,7 +99,11 @@ public class UserAction extends Activity {
 			{
 				public void onClick(View v)
 				{
-					//在此添加搜索
+					Intent intent = new Intent(UserAction.this, SearchActivity.class);
+					intent.putExtra("userId", userId);
+					intent.putExtra("storeId", storeId);
+					startActivity(intent);
+					finish();         //在此添加搜索;跳转到搜索界面
 				}
 			});
 		

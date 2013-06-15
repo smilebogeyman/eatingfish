@@ -32,6 +32,10 @@
             android:name="com.eatingfish.smartseller.ChangePsdActivity"
             android:label="@string/title_activity_change_psd" >
         </activity>
+        <activity
+            android:name="com.eatingfish.smartseller.SearchActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
     </application>
 
 </manifest>
