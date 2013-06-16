@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>  
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
     android:layout_width="fill_parent" android:layout_height="75dp"  
-    android:paddingLeft="10dp" android:paddingRight="10dp">  
+    android:paddingLeft="10dp" android:paddingRight="10dp"
+    android:orientation="horizontal">  
     <LinearLayout 
+        android:id="@+id/layout1"
         android:orientation="vertical" android:layout_height="fill_parent"  
         android:layout_width="fill_parent" 
         android:paddingLeft="8dp"
-        android:layout_alignParentLeft="true">
+        >
         <TextView 
-            android:id="@+id/title1"
+            android:id="@+id/itemName"
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:textColor="#cbcaca"  
+            android:textSize="20sp"
+            ></TextView>  
+
+        <TextView  
+            android:id="@+id/itemCato"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:textColor="#cbcaca"  
+            android:textSize="14sp"
+             />  
+    </LinearLayout>  
+    
+    <LinearLayout 
+        android:id="@+id/layout2"
+        android:orientation="vertical" android:layout_height="fill_parent"  
+        android:layout_width="fill_parent" 
+        android:paddingLeft="8dp"
+        >
+        <TextView 
+            android:id="@+id/itemPrice"
             android:layout_width="wrap_content"  
             android:layout_height="wrap_content"  
             android:textColor="#cbcaca"  
@@ -16,24 +41,55 @@
             android:textIsSelectable="true"></TextView>  
 
         <TextView  
-            android:id="@+id/title2"  
+            android:id="@+id/itemDiscount"  
             android:layout_width="wrap_content"  
             android:layout_height="wrap_content"  
             android:textColor="#cbcaca"  
             android:textSize="14sp"
              />  
-        <TextView  
-            android:id="@+id/time"  
+    </LinearLayout>  
+       <LinearLayout 
+        android:orientation="vertical" android:layout_height="fill_parent"  
+        android:layout_width="fill_parent" 
+        android:paddingLeft="8dp"
+        >
+        <TextView 
+            android:id="@+id/itemStock"
             android:layout_width="wrap_content"  
             android:layout_height="wrap_content"  
             android:textColor="#cbcaca"  
-            android:textSize="12sp" />  
+            android:textSize="20sp"
+            android:textIsSelectable="true"></TextView>  
+
+        <TextView  
+            android:id="@+id/itemNumber"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:textColor="#cbcaca"  
+            android:textSize="14sp"
+             />  
+    </LinearLayout> 
+     
+        <LinearLayout 
+        android:orientation="vertical" android:layout_height="fill_parent"  
+        android:layout_width="fill_parent" 
+        android:paddingLeft="8dp"
+        >
+        <TextView 
+            android:id="@+id/itemGift"
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:textColor="#cbcaca"  
+            android:textSize="20sp"
+            android:textIsSelectable="true"></TextView>  
+
+        <TextView  
+            android:id="@+id/itemGiftNum"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"  
+            android:textColor="#cbcaca"  
+            android:textSize="14sp"
+             />  
+  
     </LinearLayout>  
-    <CheckBox  
-        android:id="@+id/checked"  
-        android:layout_height="fill_parent"  
-        android:layout_width="wrap_content"  
-        android:layout_alignParentRight="true"  
-        android:checked="false"  
-        android:focusable="false" />  
-</RelativeLayout>  
+</LinearLayout>  

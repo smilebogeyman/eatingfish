@@ -100,7 +100,7 @@ public class UserAction extends Activity {
 				public void onClick(View v)
 				{
 					Intent intent = new Intent(UserAction.this, SearchActivity.class);
-					intent.putExtra("userId", userId);
+					//intent.putExtra("userId", userId);
 					intent.putExtra("storeId", storeId);
 					startActivity(intent);
 					finish();         //在此添加搜索;跳转到搜索界面
@@ -142,8 +142,8 @@ public class UserAction extends Activity {
 		String currUrl = HttpGetThread.BASE_URL + "getItemInfo.action?itemId=" + currItemId + "&storeId=同济" ;
 	
 	    HttpGetThread test = new HttpGetThread(currUrl) ;
-		test.start() ;   
-	    test.join() ;
+		//test.start();
+		//test.join();
 	    JSONObject jsonObject = new JSONObject(test.getResult()) ;  
         String t = jsonObject.getString("itemName");  
 	    

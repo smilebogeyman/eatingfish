@@ -17,9 +17,11 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -47,10 +49,17 @@ public class SearchActivity extends Activity {
 	private static final int SO_TIMEOUT = 10 * 1000;
 	private List<String> catoList = new ArrayList<String>();
 	private String selectedCatoName;
+	private int storeId;
+	private JSONArray ja;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
+        Intent intent = getIntent();  
+		
+         //获得前一个页面的userName和storeId
+        storeId = intent.getIntExtra("storeId", 0); 
+		
 		eTId = (EditText)findViewById(R.id.eTId);
 		
 		spinCato = (Spinner)findViewById(R.id.spinCato);
@@ -96,35 +105,70 @@ public class SearchActivity extends Activity {
 					}
 					else{
 						 selectedCatoName = spinCato.getSelectedItem().toString();
-						 
-					    
+						Thread getItemThread = new Thread(new GetItemByCato());
+						 getItemThread.start();
+						 try {
+							getItemThread.join();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							showListView();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						// 获取数据后显示出来
 					}
 				}
 			}
 			
 		});
-		String[] mForm = new String[]{"title1", "title2", "time"};
-		int[] mTo = new int[]{R.id.title1,R.id.title2,R.id.time}; 
-		List<Map<String,Object>> mList = new ArrayList<Map<String,Object>>();
-        Map<String,Object> mMap = null;
-        for(int i = 0;i < 10;i++){  
-            mMap = new HashMap<String,Object>();  
-            mMap.put("title1", "标题");  
-            mMap.put("title2", "副标题");  
-            mMap.put("time", "2011-08-15 09:00");  
-            mList.add(mMap);  
-        }  
-        //创建适配器  
-        SimpleAdapter mAdapter = new SimpleAdapter(this,mList,R.layout.items,mForm,mTo);  
-        lVItem.setAdapter(mAdapter);  
-        
+/*		String[] mForm = new String[] { "title1", "title2", "time" };
+		int[] mTo = new int[] { R.id.title1, R.id.title2, R.id.time };
+		List<Map<String, Object>> mList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> mMap = null;
+		for (int i = 0; i < 10; i++) {
+			mMap = new HashMap<String, Object>();
+			mMap.put("title1", "标题");
+			mMap.put("title2", "副标题");
+			mMap.put("time", "2011-08-15 09:00");
+			mList.add(mMap);
+		}
+		// 创建适配器
+		SimpleAdapter mAdapter = new SimpleAdapter(this, mList, R.layout.items,
+				mForm, mTo);
+		lVItem.setAdapter(mAdapter);*/
         
 		
 		
 	}
+	private void showListView() throws JSONException{
+        String[] mForm = new String[] { "itemName", "itemCato", "itemPrice","itemDiscount","itemStock","itemNumber","itemGift","itemGiftNum" };
+    		int[] mTo = new int[] { R.id.itemName, R.id.itemCato, R.id.itemPrice, R.id.itemDiscount, R.id.itemStock, R.id.itemNumber, R.id.itemGift, R.id.itemGiftNum };
+    		List<Map<String, Object>> mList = new ArrayList<Map<String, Object>>();
+    		Map<String, Object> mMap = null;
+    		for (int i = 0; i < ja.length(); i++) {
+    			mMap = new HashMap<String, Object>();
+    			mMap.put("itemName", ja.getJSONObject(i).get("itemname"));
+    			mMap.put("itemCato", selectedCatoName);
+    			mMap.put("itemPrice", String.valueOf(ja.getJSONObject(i).get("itemprice")));
+    			mMap.put("itemDiscount", ja.getJSONObject(i).get("discount"));
+    			mMap.put("itemStock", ja.getJSONObject(i).get("stock"));
+    			mMap.put("itemNumber", ja.getJSONObject(i).get("number"));
+    			mMap.put("itemGift", ja.getJSONObject(i).get("giftId"));
+    			mMap.put("itemGiftNum", ja.getJSONObject(i).get("giftnum"));
+    			mList.add(mMap);
+    		}
+    		// 创建适配器
+    		SimpleAdapter mAdapter = new SimpleAdapter(this, mList, R.layout.items,
+    				mForm, mTo);
+    		lVItem.setAdapter(mAdapter); 
+	}
 	class GetItemByCato implements Runnable{
 		public void run(){
-			
+			GetItemByCato();
 		}
 	}
 	private void GetItemByCato(){
@@ -133,17 +177,27 @@ public class SearchActivity extends Activity {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("catoName", selectedCatoName));
 		params.add(new BasicNameValuePair("itemId",""));
+		params.add(new BasicNameValuePair("storeId", String.valueOf(storeId)));
 		try{
 			request.setEntity(new UrlEncodedFormEntity(params,HTTP.UTF_8));
 			HttpClient client = getHttpClient();
 			HttpResponse response = client.execute(request);
-			 if(response.getStatusLine().getStatusCode()==200){   //获得响应信息       
-				 String responseMsg = EntityUtils.toString(response.getEntity(), "UTF-8"); 
-	             JSONArray ja = new JSONArray(responseMsg);
+			
+			 if(response.getStatusLine().getStatusCode()==200){   //获得响应信息  
+				 
+                 String responseMsg = EntityUtils.toString(response.getEntity(), "UTF-8"); 
+	             ja = new JSONArray(responseMsg);  // 获得返回数据之后，显示在listview中
+	             System.out.println(ja.getJSONObject(0).get("stock"));
+	             
+
+	             
+	             
+	             
+	             
 	             
 	             }
-	
 		}catch(Exception e){
+			System.out.println("catch");
 			e.printStackTrace();
 
 		}	
@@ -172,9 +226,9 @@ public class SearchActivity extends Activity {
 	            {
 	             //获得响应信息       
                  String responseMsg = EntityUtils.toString(response.getEntity(), "UTF-8"); 
-	             JSONArray ja = new JSONArray(responseMsg);
-	             for(int i = 0; i < ja.length(); i++){
-	            	 catoList.add(ja.getJSONObject(i).getString("catoName"));
+	             JSONArray ja0 = new JSONArray(responseMsg);
+	             for(int i = 0; i < ja0.length(); i++){
+	            	 catoList.add(ja0.getJSONObject(i).getString("catoName"));
 	            	 
 	             }
 	             
